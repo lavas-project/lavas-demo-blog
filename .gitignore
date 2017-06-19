@@ -1,0 +1,11 @@
+.DS_Store
+._.DS_Store
+node_modules
+*.log
+*.tmp
+*.swp
+.idea
+test/e2e/reports
+selenium-debug.log
+dist/
+package-lock.json
