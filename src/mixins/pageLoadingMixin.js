@@ -1,6 +1,6 @@
 /**
  * @file page loading mixin
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 export default {

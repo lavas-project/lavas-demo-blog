@@ -10,7 +10,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = merge(baseWebpackConfig, {
     target: 'node',
     devtool: false,
-    entry: './src/skeleton-entry.js',
+    entry: './src/entry-skeleton.js',
     output: Object.assign({}, baseWebpackConfig.output, {
         filename: 'skeleton-bundle.js',
         libraryTarget: 'commonjs2'

@@ -1,6 +1,6 @@
 /**
  * @file 页面骨架
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import Vue from 'vue';

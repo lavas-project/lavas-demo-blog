@@ -1,6 +1,6 @@
 /**
  * @file app shell
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import BottomNavigation from './BottomNavigation.vue';

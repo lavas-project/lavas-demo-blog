@@ -1,6 +1,6 @@
 /**
  * @file appBottomNavigator 组件
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import AppBottomNavigator from './AppBottomNavigator.vue';

@@ -1,28 +1,23 @@
 <template>
     <div class="app-shell app-shell-bottom-navigation">
-        <app-header
-            class="app-shell-header"
-            :show="appHeader.show"
-            :showMenu="appHeader.showMenu"
-            :showBack="appHeader.showBack"
-            :showLogo="appHeader.showLogo"
-            :title="appHeader.title"
-            :actions="appHeader.actions"
-            :loading="isPageSwitching"
-            @click-menu="handleClickHeaderMenu"
-            @click-back="handleClickHeaderBack">
-            <template slot="logo"></template>
-        </app-header>
-        <app-sidebar
-            :show="appSidebar.show"
-            :slideFrom="appSidebar.slideFrom"
-            :title="appSidebar.title"
-            :blocks="appSidebar.blocks"
-            @hide-sidebar = "handleHideSidebar"
-            @show-sidebar = "handleShowSidebar"
-        >
-            <template slot="logo"><span></span></template>
-        </app-sidebar>
+        <div class="app-shell-header">
+            <app-header
+                :show="appHeader.show"
+                :isRefresh="appHeader.isRefresh"
+                :showMenu="appHeader.showMenu"
+                :showBack="appHeader.showBack"
+                :showLogo="appHeader.showLogo"
+                :title="appHeader.title"
+                :actions="appHeader.actions"
+                :loading="isPageSwitching"
+                @click-logo="handleClickHeaderLogo"
+                @click-back="handleClickHeaderBack">
+                <template slot="logo">
+                    <span class="app-header-logo">新闻 - news</span>
+                </template>
+            </app-header>
+            <app-menu-tabs :entrys="menuTabs.tabs" :show="menuTabs.show"></app-menu-tabs>
+        </div>
         <div class="app-view-wrapper">
             <v-progress-circular
                 indeterminate
@@ -38,8 +33,7 @@
                         v-if="!$route.meta.notKeepAlive"
                         class="app-view"
                         :class="{
-                            'app-view-with-header': appHeader.show,
-                            'app-view-with-footer': appBottomNavigator.show
+                            'app-view-with-header': appHeader.show
                         }"></router-view>
                 </keep-alive>
             </transition>
@@ -51,40 +45,31 @@
                     v-if="$route.meta.notKeepAlive"
                     class="app-view"
                     :class="{
-                        'app-view-with-header': appHeader.show,
-                        'app-view-with-footer': appBottomNavigator.show
+                        'app-view-with-header': appHeader.show
                     }"></router-view>
             </transition>
         </div>
-        <app-bottom-navigator
-            class="app-shell-footer"
-            :show="appBottomNavigator.show"
-            :navs="appBottomNavigator.navs"
-            @click-nav="handleClickBottomNav"/>
     </div>
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import AppHeader from './components/appHeader';
-import AppSidebar from './components/appSidebar';
-import AppBottomNavigator from './components/appBottomNavigator';
+import AppMenuTabs from './components/appMenuTabs';
 
 export default {
     name: 'bottomNavigation',
     components: {
         AppHeader,
-        AppSidebar,
-        AppBottomNavigator
+        AppMenuTabs
     },
-    data () {
+    data() {
         return {};
     },
     computed: {
         ...mapGetters([
             'appHeader',
-            'appSidebar',
-            'appBottomNavigator',
+            'menuTabs',
             'isPageLoading',
             'isPageSwitching',
             'pageTransitionName'
@@ -92,10 +77,7 @@ export default {
     },
     methods: {
         ...mapActions([
-            'setPageSwitching',
-            'showSidebar',
-            'hideSidebar',
-            'activateBottomNav'
+            'setPageSwitching'
         ]),
         handleBeforeEnter() {
             this.setPageSwitching(true);
@@ -106,17 +88,8 @@ export default {
         handleClickHeaderBack() {
             this.$router.go(-1);
         },
-        handleClickHeaderMenu() {
-            this.showSidebar();
-        },
-        handleHideSidebar() {
-            this.hideSidebar();
-        },
-        handleShowSidebar() {
-            this.showSidebar();
-        },
-        handleClickBottomNav({name}) {
-            this.activateBottomNav(name);
+        handleClickHeaderLogo() {
+            this.$router.push('/');
         }
     }
 };
@@ -125,32 +98,48 @@ export default {
 <style lang="stylus" scoped>
 
 .app-shell
-    position absolute
-    top 0
-    right 0
-    bottom 0
-    left 0
-    width 100%
-    height 100%
     display flex
     flex-direction column
+
+    .app-refresh-tips
+        background #000
+        color #fff
+        height 40px
+        line-height 40px
+        padding 0 20px
+        .app-refresh-wrap
+            display flex
+        span
+            display inline-block
+            flex 1
+            font-size 15px
+        button
+            color #fff
+            outline none
+            font-size 15px
 
     .app-shell-header
         position fixed
         top 0
         left 0
         right 0
+        z-index 1000
+
+        .app-header-logo
+            padding-left 16px
+            font-size 1.2em
 
     .app-shell-footer
         position fixed
         bottom 0
         left 0
         right 0
+        z-index 1000
 
     .app-view-wrapper
         flex 1
         position relative
-        overflow hidden
+
         .app-view-loading
             position fixed
             top 50%
@@ -160,21 +149,17 @@ export default {
             color: $theme.primary
         .app-view
             position absolute
-            top 0
-            right 0
-            bottom 0
-            left 0
-            overflow-x hidden
-            overflow-y auto
+            width 100%
+            margin-top 0
             transition transform 0.4s cubic-bezier(.55, 0, .1, 1)
             background: $material-theme.bg-color
             color: $material-theme.text-color
 
             &.app-view-with-header
-                top $app-header-height
+                margin-top $app-header-height
 
-            &.app-view-with-footer
-                bottom $app-footer-height
+            // &.app-view-with-footer
+            //     bottom $app-footer-height
 
             &.slide-left-enter
                 transform translate(100%, 0)

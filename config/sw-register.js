@@ -1,6 +1,6 @@
 /**
  * @file sw register config
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 module.exports = {

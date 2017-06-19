@@ -1,6 +1,6 @@
 /**
  * @file router
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import Vue from 'vue';

@@ -1,6 +1,6 @@
 /**
  * @file mutation types
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import {types as appShellTypes} from '@/app-shells';

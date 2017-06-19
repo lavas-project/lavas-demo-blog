@@ -6,10 +6,6 @@
  * https://github.com/GoogleChrome/sw-precache#handlefetch-boolean
  * https://metaquant.org/programing/sw-precache-guide.html
 **/
-
-const config = require('./index');
-const assetsRoot = config.build;
-
 module.exports = {
 
     /* build时的正式配置文件 */
@@ -39,7 +35,7 @@ module.exports = {
            路径中含’/data/’(for dynamically-loaded data). */
         navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/).*/],
 
-        minify: true, // 是否压缩，默认不压缩
+        // minify: true, // 是否压缩，默认不压缩
 
         // maximumFileSizeToCacheInBytes: 4194304, // 最大缓存大小
 
@@ -51,6 +47,14 @@ module.exports = {
         runtimeCaching: [
             {
                 urlPattern: /\/material-design-icon/,
+                handler: 'networkFirst'
+            },
+            {
+                urlPattern: /\/pwa\.baidu\.com/,
+                handler: 'networkFirst'
+            },
+            {
+                urlPattern: /\/vue\//,
                 handler: 'networkFirst'
             }
             // ,

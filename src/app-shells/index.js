@@ -1,6 +1,6 @@
 /**
  * @file app shell entry
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 

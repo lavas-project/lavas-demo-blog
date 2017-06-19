@@ -1,6 +1,6 @@
 /**
  * @file app shell mutation types
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 export const ENABLE_PAGE_TRANSITION = 'ENABLE_PAGE_TRANSITION';
@@ -12,3 +12,4 @@ export const SET_APP_HEADER = 'SET_APP_HEADER';
 export const SET_APP_BOTTOM_NAV = 'SET_APP_BOTTOM_NAV';
 export const ACTIVATE_APP_BOTTOM_NAV = 'ACTIVATE_APP_BOTTOM_NAV';
 export const SET_SIDEBAR_VISIBILITY = 'SET_SIDEBAR_VISIBILITY';
+export const SET_MENU_TABS_VISIBILITY = 'SET_MENU_TABS_VISIBILITY';

@@ -1,4 +1,4 @@
-lavas-demo-blog
+pwa-news
 ==
 
 ## icon的使用方法

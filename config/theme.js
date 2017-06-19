@@ -3,7 +3,7 @@ const themeList = {
     // 定义主题名称
     myTheme: {
         themeColor: {
-            primary: 'rgb(40, 116, 240)',
+            primary: '#3e98f0',
             // primary: '#4DBA87',
             accent: '$blue.accent-2',
             secondary: '$grey.darken-3',

@@ -1,6 +1,6 @@
 /**
  * @file appSidebar 组件
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import AppSidebar from './AppSidebar.vue';

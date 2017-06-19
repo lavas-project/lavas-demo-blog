@@ -68,7 +68,9 @@ module.exports = function (source) {
     const options = loaderUtils.getOptions(this);
     if (options && options.injectInVueFile) {
         // inject variables into <style> tag in every '.vue' file
-        return source.replace(/(\<style.*\>)([\S\s]*)(\<\/style\>)/, `$1${injectedTemplate}$2$3`);
+        if (/lang\s*?=\s*?(['"])stylus\1/.test(source)) {
+            return source.replace(/(\<style.*\>)([\S\s]*)(\<\/style\>)/, `$1${injectedTemplate}$2$3`);
+        }
     }
     return `${injectedTemplate}${source}`;
-}
+};

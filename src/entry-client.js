@@ -1,6 +1,6 @@
 /**
  * @file client entry
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import FastClick from 'fastclick';

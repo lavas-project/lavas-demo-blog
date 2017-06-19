@@ -1,6 +1,6 @@
 /**
  * @file 事件总线
- * @author chenqiushi(chenqiushi@baidu.com)
+ * @author zoumiaojiang(zoumiaojiang@gmail.com)
  */
 
 import Vue from 'vue';

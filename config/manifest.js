@@ -1,7 +1,7 @@
 module.exports = {
     fileName: 'manifest.json',
-    name: 'lavas-demo-blog',
-    shortName: 'lavas-demo-blog',
+    name: 'pwa-news',
+    shortName: 'pwa-news',
     icons: [
         {
             src: '/static/img/icons/android-chrome-192x192.png',
@@ -16,6 +16,6 @@ module.exports = {
     ],
     startUrl: '/',
     display: 'standalone',
-    backgroundColor: '#000000',
-    themeColor: '#2874f0'
+    backgroundColor: '#fff',
+    themeColor: '#3e98f0'
 };

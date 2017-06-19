@@ -4,12 +4,10 @@ const {icon} = require('../../config');
 const {svgDir, icons, prefix} = icon;
 
 module.exports = source => {
-    if (icons) {
-        // 从vue-awesome中导入
-        icons.forEach(iconName => {
-            source += `import 'vue-awesome/icons/${iconName}';`;
-        });
-    }
+    // 从vue-awesome中导入
+    icons.forEach(iconName => {
+        source += `import 'vue-awesome/icons/${iconName}';`;
+    });
     // 从svg文件夹中取
     fs.readdirSync(svgDir).forEach(file => {
         let svg = fs.readFileSync(path.resolve(svgDir, file), 'utf8');

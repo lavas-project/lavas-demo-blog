@@ -9,7 +9,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ManifestWebpackPlugin = require('./plugins/manifest-webpack-plugin');
-var SwRegisterWebpackPlugin = require('./plugins/swRegister-webpack-plugin');
+var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 var SWPrecacheWebpackDevServerPlugin = require('sw-precache-webpack-dev-server-plugin');
 
 // add hot-reload related code to entry chunks
@@ -54,9 +54,7 @@ module.exports = merge(baseWebpackConfig, {
             fileName: utils.assetsPath(config.manifest.fileName)
         }, config.theme.manifest)),
 
-        new SwRegisterWebpackPlugin({
-            filePath: config.swRegister.filePath
-        }),
+        new SwRegisterWebpackPlugin(),
 
         new FriendlyErrorsPlugin()
     ]

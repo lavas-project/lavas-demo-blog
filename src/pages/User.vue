@@ -5,20 +5,36 @@
                 <p>
                     <v-icon light class="user-avatar-icon">face</v-icon>
                 </p>
-                <p>User Name</p>
+                <p v-cloak>{{ user.userName }}</p>
             </div>
+
             <v-list two-line>
-                <v-list-item v-for="item in items" :key="item.title">
+                <v-list-item>
                     <v-list-tile avatar>
                         <v-list-tile-avatar>
-                            <v-icon>{{ item.icon }}</v-icon>
+                            <v-icon>message</v-icon>
                         </v-list-tile-avatar>
                         <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                            <v-list-tile-title>我的消息</v-list-tile-title>
+                            <v-list-tile-sub-title></v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <span class="user-item-count" v-if="item.count">{{ item.count }}</span>
+                            <span class="user-item-count">{{ user.messageCount }}</span>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                </v-list-item>
+                <v-divider inset></v-divider>
+                <v-list-item>
+                    <v-list-tile avatar>
+                        <v-list-tile-avatar>
+                            <v-icon>star</v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>我的收藏</v-list-tile-title>
+                            <v-list-tile-sub-title></v-list-tile-sub-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <span class="user-item-count">{{ user.messageCount }}</span>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list-item>
@@ -28,49 +44,36 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 import types from '@/store/mutation-types';
 import pageLoadingMixin from '@/mixins/pageLoadingMixin';
 
 export default {
     name: 'user',
     mixins: [pageLoadingMixin],
+    computed: {
+        ...mapGetters([
+            'user'
+        ])
+    },
     data() {
-        return {
-            items: [
-                {
-                    title: 'Photos',
-                    icon: 'photo_library',
-                    subtitle: 'Jan 9, 2014'
-                },
-                {
-                    title: 'Favorites',
-                    icon: 'favorite',
-                    subtitle: 'Feb 9, 2016'
-                },
-                {
-                    title: 'Work',
-                    icon: 'work',
-                    subtitle: 'Nov 9, 2017'
-                }
-            ]
-        };
+        return {};
     },
     methods: {
         ...mapActions([
             'setPageLoading',
             'setAppHeader',
-            'showBottomNav',
-            'activateBottomNav'
+            'getUserInfo',
+            'hideMenuTabs'
         ])
     },
     activated() {
         this.setAppHeader({
             show: true,
-            title: 'VUE-PWA',
-            showMenu: true,
-            showBack: false,
-            showLogo: true,
+            title: '个人中心',
+            showMenu: false,
+            showBack: true,
+            showLogo: false,
             actions: [
                 {
                     icon: 'search',
@@ -78,23 +81,12 @@ export default {
                 }
             ]
         });
-        // 设置当前 bottom navigator 显示的 item
-        this.activateBottomNav('user');
-        this.showBottomNav();
         // 关闭加载中动画
         this.setPageLoading(false);
+        this.hideMenuTabs();
     },
     async mounted() {
-
-        // 等待 1s，模拟异步请求
-        await new Promise(resolve => {
-            setTimeout(resolve, 1000);
-        });
-
-        // 设置模拟数据
-        this.items.forEach(item => {
-            this.$set(item, 'count', Math.floor(Math.random() * 10));
-        });
+        await this.getUserInfo();
     }
 };
 </script>

@@ -14,3 +14,13 @@ $app-mask-bgcolor = #000
 $app-mask-opacity = 0.5
 $app-mask-zindex = 999
 $app-mask-duration = .5s
+
+placeholder()
+	&::-webkit-input-placeholder
+		{block}
+	&:-moz-placeholder
+		{block}
+	&::-moz-placeholder
+		{block}
+	&:-ms-input-placeholder
+		{block}
