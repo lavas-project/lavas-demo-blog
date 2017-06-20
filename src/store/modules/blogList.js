@@ -8,10 +8,12 @@ import API from '@/api';
 
 export default {
 	state: {
-		blogList: []
+		blogList: [],
+		loadingStatus: false
 	},
 	getters: {
-		blogList: state => state.blogList
+		blogList: state => state.blogList,
+		loadingStatus: state => state.loadingStatus
 	},
 	actions: {
 		async getBlogList({commit}, params) {
@@ -31,7 +33,13 @@ export default {
                     + time.getMinutes();
             });
 
-			state.blogList = blogs;
+            if (blogs.length) {
+				state.blogList = state.blogList.concat(blogs);
+				state.loadingStatus = 'loaded';
+            }
+            else {
+            	state.loadingStatus = 'complete';
+            }
 		}
 	}
 }
