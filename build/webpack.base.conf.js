@@ -1,4 +1,9 @@
-/* eslint-disable */
+/**
+ * @file 基础 webpack 配置文件，开发环境和生产环境公用的
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
+
+/* eslint-disable no-console */
 
 var path = require('path');
 var utils = require('./utils');
@@ -24,7 +29,6 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
-            // resolve alias
             'vue$': 'vue/dist/vue.esm.js',
             '@': resolve('src')
         }
@@ -33,14 +37,8 @@ module.exports = {
         rules: [
             // register custom svgs
             {
-                resource: resolve('src/svg'),
+                resource: resolve('src/app.js'),
                 loader: 'svg-loader',
-                enforce: 'pre'
-            },
-            // inject skeleton route in dev mode
-            {
-                resource: resolve('src/router'),
-                loader: 'router-loader',
                 enforce: 'pre'
             },
             // inject vuetify theme variables
@@ -98,11 +96,11 @@ module.exports = {
                 }
             }
         ]
-    },
+    }
+    ,
     resolveLoader: {
         alias: {
             'svg-loader': path.join(__dirname, './loaders/svg-loader'),
-            'router-loader': path.join(__dirname, './loaders/router-loader'),
             'theme-loader': path.join(__dirname, './loaders/theme-loader')
         }
     }

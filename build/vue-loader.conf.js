@@ -1,4 +1,8 @@
-/* eslint-disable */
+/**
+ * @file vue-loader 配置文件
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
+
 
 var utils = require('./utils');
 var config = require('../config');
@@ -9,6 +13,7 @@ module.exports = {
         sourceMap: isProduction
             ? config.build.productionSourceMap
             : config.dev.cssSourceMap,
+        // extract: isProduction
         extract: true
     })
 };

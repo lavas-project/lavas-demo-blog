@@ -1,4 +1,9 @@
-/* eslint-disable */
+/**
+ * @file 生产环境 webpack 配置文件
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
+
+/* eslint-disable no-console */
 
 var path = require('path');
 var utils = require('./utils');
@@ -11,8 +16,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-var ManifestWebpackPlugin = require('./plugins/manifest-webpack-plugin');
-var CdnWebpackPlugin = require('./plugins/cdn-webpack-plugin');
+var SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 var MultiPathWebpackPlugin = require('multi-path-webpack-plugin');
 
@@ -62,11 +66,8 @@ var webpackConfig = merge(baseWebpackConfig, {
             }
         }),
 
-        // add cdn in index.html
-        new CdnWebpackPlugin({
-            js: {
-                vue: 'https://cdn.bootcss.com/vue/2.3.3/vue.min.js'
-            }
+        new SkeletonWebpackPlugin({
+            webpackConfig: require('./webpack.skeleton.conf')
         }),
 
         // generate dist index.html with correct asset hash for caching.
@@ -87,7 +88,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             },
             favicon: utils.assetsPath('img/icons/favicon.ico'),
             // exclude skeleton chunk
-            excludeChunks: ['skeleton', config.swRegister.name || 'sw-register'],
+            excludeChunks: ['skeleton'],
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
         }),
@@ -125,18 +126,8 @@ var webpackConfig = merge(baseWebpackConfig, {
 
         // service worker caching
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
-
-        // generate manifest.json, include theme
-        new ManifestWebpackPlugin(Object.assign(config.manifest, {
-            fileName: utils.assetsPath(config.manifest.fileName)
-        }, config.theme.manifest)),
-
-        new SwRegisterWebpackPlugin(),
-
-        new MultiPathWebpackPlugin({
-            prefix: config.build.assetsPublicPath,
-            ignore: []
-        })
+        new SwRegisterWebpackPlugin({}),
+        new MultiPathWebpackPlugin({})
     ]
 });
 

@@ -1,4 +1,9 @@
-/* eslint-disable */
+/**
+ * @file 开发环境 webpack 配置文件
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
+
+/* eslint-disable no-console */
 
 var utils = require('./utils');
 var webpack = require('webpack');
@@ -8,9 +13,7 @@ var baseWebpackConfig = require('./webpack.base.conf');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestWebpackPlugin = require('./plugins/manifest-webpack-plugin');
-var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
-var SWPrecacheWebpackDevServerPlugin = require('sw-precache-webpack-dev-server-plugin');
+var SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -37,6 +40,10 @@ module.exports = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
 
+        new SkeletonWebpackPlugin({
+            webpackConfig: require('./webpack.skeleton.conf')
+        }),
+
         // https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
             filename: 'index.html',
@@ -44,17 +51,8 @@ module.exports = merge(baseWebpackConfig, {
             inject: true,
             favicon: utils.assetsPath('img/icons/favicon.ico'),
             // exclude skeleton and sw-register chunk
-            excludeChunks: ['skeleton', config.swRegister.name || 'sw-register']
+            excludeChunks: ['skeleton']
         }),
-        // service worker caching
-        new SWPrecacheWebpackDevServerPlugin(config.swPrecache.dev),
-
-        // generate manifest.json, include theme
-        new ManifestWebpackPlugin(Object.assign(config.manifest, {
-            fileName: utils.assetsPath(config.manifest.fileName)
-        }, config.theme.manifest)),
-
-        new SwRegisterWebpackPlugin(),
 
         new FriendlyErrorsPlugin()
     ]

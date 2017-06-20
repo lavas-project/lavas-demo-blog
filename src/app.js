@@ -1,22 +1,22 @@
 /**
  * @file entry
- * @author zoumiaojiang(zoumiaojiang@gmail.com)
+ * @author chenqiushi(chenqiushi@baidu.com)
  */
 
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import VueTouch from 'vue-touch';
 import App from './App.vue';
 import {createRouter} from './router.js';
 import store from './store';
-import './svg';
-import * as filters from './filters';
+import Icon from 'vue-awesome/components/Icon.vue';
+
+Vue.component('icon', Icon);
 
 Vue.use(Vuetify);
 
-// 注册filter
-Object.keys(filters).forEach(key => {
-    Vue.filter(key, filters[key]);
-});
+// 基于hammer.js的手势库
+Vue.use(VueTouch);
 
 Vue.config.productionTip = false;
 

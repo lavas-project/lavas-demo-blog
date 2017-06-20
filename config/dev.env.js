@@ -1,4 +1,7 @@
-/* eslint-disable */
+/**
+ * @file 开发环境相关配置文件
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
 
 var merge = require('webpack-merge');
 var prodEnv = require('./prod.env');

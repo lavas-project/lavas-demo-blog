@@ -40,16 +40,4 @@ export default {
     &.fade-enter-active
         transition opacity $app-mask-duration
 
-@keyframes fadeout
-    0%
-        opacity $app-mask-opacity
-    100%
-        opacity 0
-
-@keyframes fadein
-    0%
-        opacity 0
-    100%
-        opacity $app-mask-opacity
-
 </style>

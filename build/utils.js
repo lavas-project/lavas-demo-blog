@@ -1,14 +1,20 @@
-/* eslint-disable */
+/**
+ * @file 工具包
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
+
+/* eslint-disable no-console */
 
 var path = require('path');
 var config = require('../config');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-exports.assetsPath = function (_path) {
+exports.assetsPath = function (newPath) {
     var assetsSubDirectory = process.env.NODE_ENV === 'production'
         ? config.build.assetsSubDirectory
-        : config.dev.assetsSubDirectory;
-    return path.posix.join(assetsSubDirectory, _path);
+        : config.dev.assetsSubDirectory
+    ;
+    return path.posix.join(assetsSubDirectory, newPath);
 };
 
 exports.cssLoaders = function (options) {
@@ -62,12 +68,13 @@ exports.cssLoaders = function (options) {
 exports.styleLoaders = function (options) {
     var output = [];
     var loaders = exports.cssLoaders(options);
-    for (var extension in loaders) {
+
+    Object.keys(loaders).forEach(function (extension) {
         var loader = loaders[extension];
         output.push({
             test: new RegExp('\\.' + extension + '$'),
             use: loader
         });
-    }
+    });
     return output;
 };

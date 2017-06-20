@@ -5,36 +5,20 @@
                 <p>
                     <v-icon light class="user-avatar-icon">face</v-icon>
                 </p>
-                <p v-cloak>{{ user.userName }}</p>
+                <p>User Name</p>
             </div>
-
             <v-list two-line>
-                <v-list-item>
+                <v-list-item v-for="item in items" :key="item.title">
                     <v-list-tile avatar>
                         <v-list-tile-avatar>
-                            <v-icon>message</v-icon>
+                            <v-icon>{{ item.icon }}</v-icon>
                         </v-list-tile-avatar>
                         <v-list-tile-content>
-                            <v-list-tile-title>我的消息</v-list-tile-title>
-                            <v-list-tile-sub-title></v-list-tile-sub-title>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <span class="user-item-count">{{ user.messageCount }}</span>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                </v-list-item>
-                <v-divider inset></v-divider>
-                <v-list-item>
-                    <v-list-tile avatar>
-                        <v-list-tile-avatar>
-                            <v-icon>star</v-icon>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>我的收藏</v-list-tile-title>
-                            <v-list-tile-sub-title></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <span class="user-item-count">{{ user.messageCount }}</span>
+                            <span class="user-item-count" v-if="item.count">{{ item.count }}</span>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list-item>
@@ -44,36 +28,48 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
+import {mapActions} from 'vuex';
 import types from '@/store/mutation-types';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
 
 export default {
     name: 'user',
-    mixins: [pageLoadingMixin],
-    computed: {
-        ...mapGetters([
-            'user'
-        ])
-    },
     data() {
-        return {};
+        return {
+            items: [
+                {
+                    title: 'Photos',
+                    icon: 'photo_library',
+                    subtitle: 'Jan 9, 2014'
+                },
+                {
+                    title: 'Favorites',
+                    icon: 'favorite',
+                    subtitle: 'Feb 9, 2016'
+                },
+                {
+                    title: 'Work',
+                    icon: 'work',
+                    subtitle: 'Nov 9, 2017'
+                }
+            ]
+        };
     },
     methods: {
-        ...mapActions([
-            'setPageLoading',
-            'setAppHeader',
-            'getUserInfo',
-            'hideMenuTabs'
+        ...mapActions('appShell/appHeader', [
+            'setAppHeader'
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
+            'showBottomNav',
+            'activateBottomNav'
         ])
     },
     activated() {
         this.setAppHeader({
             show: true,
-            title: '个人中心',
-            showMenu: false,
-            showBack: true,
-            showLogo: false,
+            title: 'Lavas',
+            showMenu: true,
+            showBack: false,
+            showLogo: true,
             actions: [
                 {
                     icon: 'search',
@@ -81,12 +77,14 @@ export default {
                 }
             ]
         });
-        // 关闭加载中动画
-        this.setPageLoading(false);
-        this.hideMenuTabs();
+        // 设置当前 bottom navigator 显示的 item
+        this.activateBottomNav('user');
+        this.showBottomNav();
     },
-    async mounted() {
-        await this.getUserInfo();
+    async asyncData({store, route}) {
+        await new Promise(resolve => {
+            setTimeout(resolve, 1000);
+        });
     }
 };
 </script>

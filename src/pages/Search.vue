@@ -1,173 +1,145 @@
 <template>
     <div class="app-search-page">
         <header>
-            <v-btn light icon @click.native="$router.go(-1)">
-                <v-icon>arrow_back</v-icon>
+            <v-btn light icon class="search-btn" @click.native="$router.go(-1)">
+                <v-icon class="search-icon">arrow_back</v-icon>
             </v-btn>
-            <morph-search
-                class="search-wrapper"
-                :history="searchHistory"
-                @search="handleSearch"
-                @delete-history="handleDeleteHistory"></morph-search>
+            <form @submit.prevent="search">
+                <input class="search-input" v-model="query" type="search" autocomplete="off" placeholder="请输入搜索词" autocapitalize="off" />
+            </form>
+            <v-btn light icon class="search-btn" @click.native="query = ''">
+                <v-icon class="search-icon">close</v-icon>
+            </v-btn>
         </header>
-
-        <div class="result-wrapper">
-            <transition name="slide-left">
-                <v-card class="result-card" v-show="searchResult && searchResult.length">
-                    <v-card-row class="blue darken-4">
-                        <v-card-title>
-                            <v-icon class="red--text text--lighten-1">search</v-icon>
-                            <span class="white--text">“{{lastQuery}}”的搜索结果</span>
-                        </v-card-title>
-                    </v-card-row>
-                    <v-card-text>
-                        <v-list two-line>
-                            <v-list-item v-for="(item, index) in searchResult" v-bind:key="index">
-                                <v-list-tile avatar ripple>
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                        <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.abs }}</v-list-tile-sub-title>
-                                    </v-list-tile-content>
-                                    <v-list-tile-action>
-                                        <v-list-tile-action-text class="news-date">{{ item.ts | formatDateToNow }}</v-list-tile-action-text>
-                                        <v-icon class="grey--text text--lighten-1">star_border</v-icon>
-                                    </v-list-tile-action>
-                                </v-list-tile>
-                            </v-list-item>
-                        </v-list>
-                    </v-card-text>
-                </v-card>
-            </transition>
-
-            <v-card class="result-card">
-                <v-card-row class="blue darken-4">
-                    <v-card-title>
-                        <v-icon class="red--text text--lighten-1">whatshot</v-icon>
-                        <span class="white--text">热搜榜</span>
-                    </v-card-title>
-                </v-card-row>
-                <v-card-text>
-                    <v-list two-line v-show="hotNews && hotNews.length">
-                        <v-list-item v-for="(item, index) in hotNews" v-bind:key="index">
-                            <v-list-tile avatar ripple>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                    <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.abs }}</v-list-tile-sub-title>
-                                </v-list-tile-content>
-                                <v-list-tile-action>
-                                    <v-list-tile-action-text class="news-date">{{ item.ts | formatDateToNow }}</v-list-tile-action-text>
-                                    <v-icon class="grey--text text--lighten-1">star_border</v-icon>
-                                </v-list-tile-action>
-                            </v-list-tile>
-                        </v-list-item>
-                    </v-list>
-                </v-card-text>
-            </v-card>
+        <div v-if="loading" class="search-loading">
+            <v-progress-circular indeterminate v-bind:size="70" class="primary--text"></v-progress-circular>
+        </div>
+        <div v-if="data && data.length" class="search-content">
+            <v-list two-line>
+                <v-list-item v-for="(item, index) in data" v-bind:key="item.title">
+                    <v-list-tile avatar ripple>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                            <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.headline }}</v-list-tile-sub-title>
+                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+                            <v-icon class="grey--text text--lighten-1">star_border</v-icon>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                    <v-divider light v-if="index + 1 < data.length"></v-divider>
+                </v-list-item>
+            </v-list>
         </div>
     </div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
+import {mapActions} from 'vuex';
 import types from '@/store/mutation-types';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
-import MorphSearch from '@/components/MorphSearch';
 
 export default {
     name: 'search',
-    components: {
-        MorphSearch
-    },
-    mixins: [pageLoadingMixin],
-    computed: {
-        ...mapGetters([
-            'hotNews',
-            'searchHistory',
-            'searchResult'
-        ])
-    },
     data() {
         return {
-            lastQuery: ''
+            query: '',
+            loading: false,
+            data: []
         };
     },
     methods: {
-        ...mapActions([
-            'setPageLoading',
-            'setAppHeader',
-            'getHotNews',
-            'searchNews',
-            'deleteQueryHistory',
-            'hideMenuTabs'
+        ...mapActions('appShell/appHeader', [
+            'setAppHeader'
         ]),
-        async handleSearch(query) {
-            this.setPageLoading(true);
-            await this.searchNews(query);
-            this.lastQuery = query;
-            this.setPageLoading(false);
-        },
-        handleDeleteHistory(historyItem) {
-            this.deleteQueryHistory(historyItem);
+        ...mapActions('appShell/appBottomNavigator', [
+            'hideBottomNav'
+        ]),
+        async search() {
+            // 把数据清空
+            this.data = [];
+            // 显示加载动画
+            this.loading = true;
+            // 让当前输入框失去焦点
+            this.$el.querySelector('.search-input').blur();
+
+            // 等待 1s，模拟加载中的效果
+            await new Promise(resolve => {
+                setTimeout(resolve, 1000);
+            });
+
+            // 设置搜索结果数据
+            this.data = [
+                {
+                    title: 'Ali Connors',
+                    headline: 'Brunch this weekend?',
+                    subtitle: 'I\'ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+                    action: '15 min'
+                },
+                {
+                    title: 'me, Scrott, Jennifer',
+                    headline: 'Summer BBQ',
+                    subtitle: 'Wish I could come, but I\'m out of town this weekend.',
+                    action: '2 hr'
+                },
+                {
+                    title: 'Sandra Adams',
+                    headline: 'Oui oui',
+                    subtitle: 'Do you have Paris recommendations? Have you ever been?',
+                    action: '6 hr'
+                },
+                {
+                    title: 'Trevor Hansen',
+                    headline: 'Birthday gift',
+                    subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
+                    action: '12 hr'
+                },
+                {
+                    title: 'Britta Holt',
+                    headline: 'Recipe to try',
+                    subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
+                    action: '18 hr'
+                }
+            ];
+
+            this.loading = false;
         }
     },
     activated() {
         this.setAppHeader({show: false});
-        this.setPageLoading(false);
-        this.hideMenuTabs();
-    },
-    async mounted() {
-        await this.getHotNews();
+        this.hideBottomNav();
     }
 };
 </script>
 
 <style lang="stylus" scoped>
 
-.app-search-page
-    background #eee !important
+header
+    display flex
+    align-items center
+    height 52px
+    box-shadow 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px rgba(0,0,0,.14), 0 1px 10px rgba(0,0,0,.12)
 
-    header
-        display flex
-        align-items center
-        height $app-header-height
-        background: $theme.primary
-        box-shadow 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px rgba(0,0,0,.14), 0 1px 10px rgba(0,0,0,.12)
+form
+    flex 1
 
-        .search-wrapper
-            flex 1
+.search-input
+    width 100%
+    outline none
+    font-size 16px
+    height 50px
 
-    .result-wrapper
-        padding 6px
+.search-btn
+    color #959595
 
-        .result-card
-            background: $material-theme.bg-color
-            margin-bottom 6px
-            transition transform 0.2s ease-in-out
-            transform translate3d(0,0,0)
+.search-loading
+    margin-top 30%
+    display flex
+    justify-content center
 
-            &.slide-left-enter
-                transform translate(100%, 0)
+.search-content
+    margin-top 20px
 
-            &.slide-right-enter
-                transform translate(-100%, 0)
-
-            &.slide-right-leave-active
-                transform translate(100%, 0)
-
-            &.slide-left-leave-active
-                transform translate(-100%, 0)
-
-            .card__row
-                height $app-header-height
-                .card__title
-                    font-size 16px
-                    padding 12px 16px
-            .card__text
-                padding 0
-
-                .news-date
-                    text-align right
-                    white-space normal
-
-
+li
+    list-style-type none
 </style>

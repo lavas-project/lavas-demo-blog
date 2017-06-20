@@ -1,19 +1,18 @@
-/* eslint-disable */
+/**
+ * @file 项目所有的配置文件
+ * @author chenqiushi(chenqiushi@baidu.com)
+ */
 
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path');
-var iconConfig = require('./icon');
-var themeConfig = require('./theme');
-var manifestConfig = require('./manifest');
 var swPrecacheConfig = require('./sw-precache');
-var swRegisterConfig = require('./sw-register');
+var theme = require('./theme');
+var icon = require('./icon');
 
 module.exports = {
-    icon: iconConfig,
-    theme: themeConfig,
-    manifest: manifestConfig,
+    icon: icon,
+    theme: theme,
     swPrecache: swPrecacheConfig,
-    swRegister: swRegisterConfig,
     build: {
         env: require('./prod.env'),
         index: path.resolve(__dirname, '../dist/index.html'),
