@@ -1,7 +1,7 @@
 {
   "name": "blog-demo",
   "version": "1.0.0",
-  "description": "blog demo",
+  "description": "lavas blog demo",
   "author": "chenqiushi <chenqiushi@baidu.com>",
   "private": true,
   "scripts": {
