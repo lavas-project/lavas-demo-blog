@@ -51,7 +51,7 @@ export default {
     activated() {
         this.setAppHeader({
             show: true,
-            title: 'Blog',
+            title: 'Tom 的博客',
             showMenu: true,
             showBack: false,
             showLogo: true,

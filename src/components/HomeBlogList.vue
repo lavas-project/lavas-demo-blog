@@ -2,7 +2,7 @@
     <div class="blog-list-wrapper">
         <!-- 列表部分list组件，后面提出来 -->
         <div class="blog-list">
-            <div v-for="blog in blogList" class="blog-item" @click="getDetail(blog.id)">
+            <div v-for="blog in blogList" class="blog-item" @click="openDetail(blog.id)">
                 <div class="title">{{blog.title}}</div>
                 <p class="abstract">{{ blog.abs}}</p>
                 <div class="time">发布时间：{{ blog.time }}</div>
@@ -28,16 +28,12 @@ export default {
     },
     methods: {
         ...mapActions([
-            'setPageLoading',
-            // 'getBlogList',
-            'setPageLoading'
         ]),
 
         // 查看详情
-        async getDetail (bid) {
-            this.setPageLoading(true);
-            this.getBlogDetail({bid});
-            this.$router.push('/detail/?bid=' + nid);
+        async openDetail (blogId) {
+            // this.getBlogDetail({bid});
+            this.$router.push('/detail/?id=' + blogId);
         }
     }
 };

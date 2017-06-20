@@ -1,26 +1,23 @@
 <template>
     <div class="detail-wrapper">
-        <v-layout row wrap>
-            <v-flex xs10 offset-xs1>
-                <article class="detail-content text-xs-center">
-                    <header class="detail-title text-xs-center">
-                        Detail
-                    </header>
-                    <p>
-                    Progressive Web Apps are user experiences that have the reach of the web, and are:
-Reliable - Load instantly and never show the downasaur, even in uncertain network conditions.
-Fast - Respond quickly to user interactions with silky smooth animations and no janky scrolling.
-Engaging - Feel like a natural app on the device, with an immersive user experience.
-This new level of quality allows Progressive Web Apps to earn a place on the user's home screen.
-                    </p>
-                </article>
-            </v-flex>
-        </v-layout>
+        <h3>{{blogDetail.title}}</h3>
+
+        <div class="title-info">
+            <span>{{blogDetail.author}}</span>
+            <span>{{blogDetail.time}}</span>
+        </div>
+
+        <div class="content">
+            <div v-for="content in contents" class="news-item">
+                <p v-if="content.type === 'text'">{{ content.data }}</p>
+                <img v-if="content.type === 'image'" :src="content.data.original.url"/>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 import * as types from '@/store/mutation-types';
 
 export default {
@@ -29,23 +26,28 @@ export default {
     data() {
         return {}
     },
+    computed: {
+        ...mapGetters([
+            'blogDetail'
+        ]),
+        contents() {
+            return this.blogDetail && this.blogDetail.content || [];
+        }
+    },
     methods: {
         ...mapActions('appShell/appHeader', [
             'setAppHeader'
         ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'hideBottomNav'
+        ...mapActions([
+            'getBlogDetail'
         ])
     },
-    async asyncData() {
-        await new Promise((resolve, reject) => {
-            setTimeout(resolve, 1000);
-        });
-    },
-    activated() {
+    async activated() {
+        var id = this.$route.query.id;
+
         this.setAppHeader({
             show: true,
-            title: 'Lavas',
+            title: '文章详情',
             showMenu: false,
             showBack: true,
             showLogo: false,
@@ -58,23 +60,39 @@ export default {
                 }
             ]
         });
-        this.hideBottomNav();
+
+        await this.getBlogDetail(id);
     }
 };
 </script>
 
 <style lang="stylus" scoped>
 
-.detail-content
-    font-size 16px
-    line-height 30px
-    margin-top 30px
+.detail-wrapper
+    padding 20px
+    min-height 200px
+    h3
+        font-size 26px
+        line-height 36px
+        font-weight 700
+        marigin-bottom 20px
 
-    .detail-title
+    .title-info
         margin-bottom 20px
-        padding 10px 0
-        font-size 36px
-        font-weight bold
+        font-size 14px
+        color #808080
+        span
+            margin-right 10px
+
+    .content
+        line-height 27px
+        font-size 16px
+        p
+            margin-top 10px
+            text-indent 32px
+        img
+            width 100%
+            height 100%
 
 
 </style>
