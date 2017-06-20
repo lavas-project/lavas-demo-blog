@@ -1,5 +1,7 @@
 <template>
     <div class="home-wrapper">
+        <div class="blogs-wrapper">
+        </div>
     </div>
 </template>
 

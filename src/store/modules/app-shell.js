@@ -93,7 +93,7 @@ export default {
                  *
                  * @type {string}
                  */
-                title: 'Lavas',
+                title: 'Tom\'s Blog',
 
                 /**
                  * logo图标名称

@@ -23,8 +23,7 @@
                             v-if="!$route.meta.notKeepAlive"
                             class="app-view"
                             :class="{
-                                'app-view-with-header': appHeader.show,
-                                'app-view-with-footer': appBottomNavigator.show
+                                'app-view-with-header': appHeader.show
                             }"></router-view>
                     </keep-alive>
                 </transition>
@@ -36,14 +35,10 @@
                         v-if="$route.meta.notKeepAlive"
                         class="app-view"
                         :class="{
-                            'app-view-with-header': appHeader.show,
-                            'app-view-with-footer': appBottomNavigator.show
+                            'app-view-with-header': appHeader.show
                         }"></router-view>
                 </transition>
             </div>
-            <app-bottom-navigator
-                class="app-shell-footer"
-                @click-nav="handleClickBottomNav"/>
         </div>
     </div>
 </template>
@@ -52,14 +47,12 @@
 import {mapState, mapActions} from 'vuex';
 import AppHeader from '@/components/AppHeader';
 import AppSidebar from '@/components/AppSidebar';
-import AppBottomNavigator from '@/components/AppBottomNavigator';
 
 export default {
     name: 'app',
     components: {
         AppHeader,
-        AppSidebar,
-        AppBottomNavigator
+        AppSidebar
     },
     data () {
         return {};
@@ -67,7 +60,6 @@ export default {
     computed: {
         ...mapState('appShell', [
             'appHeader',
-            'appBottomNavigator',
             'pageTransitionName'
         ])
     },
@@ -78,9 +70,6 @@ export default {
         ...mapActions('appShell/appSidebar', [
             'showSidebar',
             'hideSidebar',
-        ]),
-        ...mapActions('appShell/appBottomNavigator', [
-            'activateBottomNav'
         ]),
         handleBeforeEnter() {
             this.setPageSwitching(true);
@@ -99,9 +88,6 @@ export default {
         },
         handleShowSidebar() {
             this.showSidebar();
-        },
-        handleClickBottomNav({name}) {
-            this.activateBottomNav(name);
         }
     }
 };
