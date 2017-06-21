@@ -14,29 +14,20 @@
         <div v-if="loading" class="search-loading">
             <v-progress-circular indeterminate v-bind:size="70" class="primary--text"></v-progress-circular>
         </div>
-        <div v-if="data && data.length" class="search-content">
-            <v-list two-line>
-                <v-list-item v-for="(item, index) in data" v-bind:key="item.title">
-                    <v-list-tile avatar ripple>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.headline }}</v-list-tile-sub-title>
-                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                            <v-icon class="grey--text text--lighten-1">star_border</v-icon>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider light v-if="index + 1 < data.length"></v-divider>
-                </v-list-item>
-            </v-list>
+        <div v-if="blogSearchList && blogSearchList.length" class="search-content">
+            <div class="blog-list">
+                <div v-for="blog in blogSearchList" class="blog-item" @click="openDetail(blog.id)">
+                    <div class="title">{{blog.title}}</div>
+                    <p class="abstract">{{ blog.abs}}</p>
+                    <div class="time">发布时间：{{ blog.time }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 import types from '@/store/mutation-types';
 
 export default {
@@ -50,7 +41,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            searchBlogList
+            'blogSearchList'
         ])
     },
     methods: {
@@ -72,13 +63,17 @@ export default {
             this.$el.querySelector('.search-input').blur();
 
             // 等待 1s，模拟加载中的效果
-            await getBlogSearchList({
-                pageNum: Math.floor(this.searchBlogList.length / 20),
+            await this.getBlogSearchList({
+                pageNum: Math.floor(this.blogSearchList.length / 20),
                 pageSize: 20,
                 isNewSearch: true
             });
 
             this.loading = false;
+        },
+        // 查看详情
+        async openDetail (blogId) {
+            this.$router.push('/detail/?id=' + blogId);
         }
     },
     activated() {
@@ -118,4 +113,26 @@ form
 
 li
     list-style-type none
+
+.blog-list
+    padding 0 15px
+    .blog-item
+        padding-bottom 20px
+        border-bottom 1px solid #eee
+        .title
+            font-weight 700
+            font-size 21px
+            line-height 30px
+            margin 30px 0 15px 0
+        .abstract
+            font-size 14px
+            color #9f9f9f
+            margin-bottom 10px
+            display -webkit-box
+            overflow hidden
+            text-overflow ellipsis
+            -webkit-box-orient vertical
+            -webkit-line-clamp 5
+        .time
+            color #808080
 </style>

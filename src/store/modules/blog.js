@@ -16,7 +16,8 @@ export default {
     getters: {
         blogList: state => state.blogList,
         loadingStatus: state => state.loadingStatus,
-        blogDetail: state => state.blogDetail
+        blogDetail: state => state.blogDetail,
+        blogSearchList: state => state.blogSearchList
     },
     actions: {
         async getBlogList({commit}, params) {
