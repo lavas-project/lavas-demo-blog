@@ -21,8 +21,9 @@ export default {
     },
     actions: {
         async getBlogList({commit}, params) {
+            let type = params.type || 1;
             try {
-                let res = await axios('./api/blogList.json', {
+                let res = await axios(`./api/blogLists/blogList_${type}.json`, {
                     method: 'get'
                 });
 
@@ -34,8 +35,10 @@ export default {
             catch (e) {}
         },
         async getBlogDetail({commit}, params) {
+            let id = params.id;
+
             try {
-                let res = await axios('./api/blogDetail.json', {
+                let res = await axios(`./api/blogDetails/blogDetail_${id}.json`, {
                     method: 'get'
                 });
 

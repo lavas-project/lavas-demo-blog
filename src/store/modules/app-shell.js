@@ -183,23 +183,23 @@ export default {
                         sublistTitle: '文章分类',
                         list: [
                             {
-                                text: 'Web前端',
+                                text: 'Node',
                                 icon: 'sentiment_satisfied',
                                 route: '/?type=1'
                             },
                             {
-                                text: 'Node',
+                                text: '移动端开发',
                                 image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
                                 alt: 'mood-bad',
                                 route: '/?type=2'
                             },
                             {
-                                text: '杂谈',
+                                text: 'Javascript & ES Next',
                                 svg: 'svg-sentiment-very-satisfied',
                                 route: '/?type=3'
                             },
                             {
-                                text: '数据库',
+                                text: '杂谈',
                                 svg: 'svg-sentiment-very-satisfied',
                                 route: '/?type=4'
                             }
