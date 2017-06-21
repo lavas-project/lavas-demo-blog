@@ -19,7 +19,7 @@ Vue.use(Router);
 export function createRouter() {
 
     const router = new Router({
-        mode: 'history',
+        // mode: 'history',
         routes: [
             {
                 path: '/',

@@ -4,7 +4,7 @@
  */
 
 import * as types from '../mutation-custom-types';
-import API from '@/api';
+import axios from 'axios';
 
 export default {
 	state: {
@@ -20,14 +20,27 @@ export default {
 	actions: {
 		async getBlogList({commit}, params) {
 			try {
-				let {blogs} = await API.getBlogList(params);
-				commit(types.SET_BLOG_LIST, {blogs});
+                let res = await axios('./api/blogList.json', {
+                    method: 'get'
+                });
+
+                if (res.status === 200) {
+                    let blogs = res.data.blogs;
+                    commit(types.SET_BLOG_LIST, {blogs});
+                }
 			}
 			catch (e) {}
 		},
 		async getBlogDetail({commit}, params) {
 			try {
-				let {blogDetail} = await API.getBlogDetail(params);
+                let res = await axios('./api/blogDetail.json', {
+                    method: 'get'
+                });
+
+                if (res.status === 200) {
+                    let blogDetail = res.data.blogDetail;
+                    commit(types.SET_BLOG_DETAIL, {blogDetail});
+                }
 				commit(types.SET_BLOG_DETAIL, {blogDetail});
 			}
 			catch (e) {}
