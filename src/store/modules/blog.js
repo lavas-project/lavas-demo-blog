@@ -1,5 +1,5 @@
 /**
- * @file blogList store
+ * @file blog store
  * @author chenqiushi
  */
 
