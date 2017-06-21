@@ -14,29 +14,20 @@
         <div v-if="loading" class="search-loading">
             <v-progress-circular indeterminate v-bind:size="70" class="primary--text"></v-progress-circular>
         </div>
-        <div v-if="data && data.length" class="search-content">
-            <v-list two-line>
-                <v-list-item v-for="(item, index) in data" v-bind:key="item.title">
-                    <v-list-tile avatar ripple>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.headline }}</v-list-tile-sub-title>
-                            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                            <v-icon class="grey--text text--lighten-1">star_border</v-icon>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-divider light v-if="index + 1 < data.length"></v-divider>
-                </v-list-item>
-            </v-list>
+        <div v-if="blogSearchList && blogSearchList.length" class="search-content">
+            <div class="blog-list">
+                <div v-for="blog in blogSearchList" class="blog-item" @click="openDetail(blog.id)">
+                    <div class="title">{{blog.title}}</div>
+                    <p class="abstract">{{ blog.abs}}</p>
+                    <div class="time">发布时间：{{ blog.time }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 import types from '@/store/mutation-types';
 
 export default {
@@ -48,12 +39,20 @@ export default {
             data: []
         };
     },
+    computed: {
+        ...mapGetters([
+            'blogSearchList'
+        ])
+    },
     methods: {
         ...mapActions('appShell/appHeader', [
             'setAppHeader'
         ]),
         ...mapActions('appShell/appBottomNavigator', [
             'hideBottomNav'
+        ]),
+        ...mapActions([
+            'getBlogSearchList'
         ]),
         async search() {
             // 把数据清空
@@ -64,45 +63,17 @@ export default {
             this.$el.querySelector('.search-input').blur();
 
             // 等待 1s，模拟加载中的效果
-            await new Promise(resolve => {
-                setTimeout(resolve, 1000);
+            await this.getBlogSearchList({
+                pageNum: Math.floor(this.blogSearchList.length / 20),
+                pageSize: 20,
+                isNewSearch: true
             });
 
-            // 设置搜索结果数据
-            this.data = [
-                {
-                    title: 'Ali Connors',
-                    headline: 'Brunch this weekend?',
-                    subtitle: 'I\'ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
-                    action: '15 min'
-                },
-                {
-                    title: 'me, Scrott, Jennifer',
-                    headline: 'Summer BBQ',
-                    subtitle: 'Wish I could come, but I\'m out of town this weekend.',
-                    action: '2 hr'
-                },
-                {
-                    title: 'Sandra Adams',
-                    headline: 'Oui oui',
-                    subtitle: 'Do you have Paris recommendations? Have you ever been?',
-                    action: '6 hr'
-                },
-                {
-                    title: 'Trevor Hansen',
-                    headline: 'Birthday gift',
-                    subtitle: 'Have any ideas about what we should get Heidi for her birthday?',
-                    action: '12 hr'
-                },
-                {
-                    title: 'Britta Holt',
-                    headline: 'Recipe to try',
-                    subtitle: 'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-                    action: '18 hr'
-                }
-            ];
-
             this.loading = false;
+        },
+        // 查看详情
+        async openDetail (blogId) {
+            this.$router.push('/detail/?id=' + blogId);
         }
     },
     activated() {
@@ -142,4 +113,26 @@ form
 
 li
     list-style-type none
+
+.blog-list
+    padding 0 15px
+    .blog-item
+        padding-bottom 20px
+        border-bottom 1px solid #eee
+        .title
+            font-weight 700
+            font-size 21px
+            line-height 30px
+            margin 30px 0 15px 0
+        .abstract
+            font-size 14px
+            color #9f9f9f
+            margin-bottom 10px
+            display -webkit-box
+            overflow hidden
+            text-overflow ellipsis
+            -webkit-box-orient vertical
+            -webkit-line-clamp 5
+        .time
+            color #808080
 </style>

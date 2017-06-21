@@ -1,6 +1,6 @@
 {
-  "name": "BPWA SPA",
-  "short_name": "BPWA SPA",
+  "name": "Lavas Blog",
+  "short_name": "Lavas Blog",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -15,5 +15,5 @@
   "start_url": "/",
   "background_color": "#000000",
   "display": "standalone",
-  "theme_color": "#2874f0"
+  "theme_color": "#4dba87"
 }

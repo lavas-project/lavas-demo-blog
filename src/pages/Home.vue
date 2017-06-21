@@ -42,7 +42,7 @@ export default {
         ]),
         async getMoreBlogs() {
             await this.getBlogList({
-                pageNum: Math.floor(this.blogList.length / 20),
+                pageNum: Math.floor(this.blogList.length / 10),
                 pageSize: 10
             });
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:' + this.loadingStatus);
