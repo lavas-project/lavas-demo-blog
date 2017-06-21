@@ -5,4 +5,5 @@
 
 export const SET_BLOG_LIST = 'SET_BLOG_LIST';
 export const SET_BLOG_DETAIL = 'SET_BLOG_DETAIL';
+export const SET_BLOG_SEARCH_LIST = 'SET_BLOG_SEARCH_LIST';
 
