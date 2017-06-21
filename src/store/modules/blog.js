@@ -28,7 +28,7 @@ export default {
 
                 if (res.status === 200) {
                     let blogs = res.data.blogs;
-                    commit(types.SET_BLOG_LIST, {blogs});
+                    commit(types.SET_BLOG_LIST, {blogs, params});
                 }
             }
             catch (e) {}
@@ -64,7 +64,7 @@ export default {
         }
     },
     mutations: {
-        [types.SET_BLOG_LIST](state, {blogs}) {
+        [types.SET_BLOG_LIST](state, {blogs, params}) {
             blogs.map(item => {
                 let time = new Date(Number(item.ts) || Date.now());
                 item.time = time.getFullYear() + '-' + time.getMonth() + '-'
@@ -73,7 +73,13 @@ export default {
             });
 
             if (blogs.length) {
-                state.blogList = state.blogList.concat(blogs);
+                if (params.change) {
+                    state.blogList = blogs;
+                }
+                else {
+                    state.blogList = state.blogList.concat(blogs);
+                }
+
                 state.loadingStatus = 'loaded';
             }
             else {

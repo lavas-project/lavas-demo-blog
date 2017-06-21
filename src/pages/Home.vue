@@ -31,6 +31,7 @@ export default {
         ...mapGetters([
             'blogList',
             'loadingStatus'
+
         ])
     },
     methods: {
@@ -41,11 +42,27 @@ export default {
             'getBlogList'
         ]),
         async getMoreBlogs() {
+            let type = this.$route.query.type || '';
+
             await this.getBlogList({
+                type,
                 pageNum: Math.floor(this.blogList.length / 10),
                 pageSize: 10
             });
+
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:' + this.loadingStatus);
+        }
+    },
+    watch: {
+        '$route.query.type': function (type) {
+            document.body.scrollTop = 0;
+
+            this.getBlogList({
+                type,
+                change: true,
+                pageNum: 0,
+                pageSize: 10
+            });
         }
     },
     activated() {

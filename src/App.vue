@@ -128,7 +128,7 @@ export default {
     .app-view-wrapper
         flex 1
         position relative
-        overflow hidden
+
         .app-view-loading
             position fixed
             top 50%
@@ -138,12 +138,8 @@ export default {
             color: $theme.primary
         .app-view
             position absolute
-            top 0
-            right 0
-            bottom 0
-            left 0
-            overflow-x hidden
-            overflow-y auto
+            width 100%
+            margin-top 0
             transition transform 0.4s cubic-bezier(.55, 0, .1, 1)
             background: $material-theme.bg-color
             color: $material-theme.text-color

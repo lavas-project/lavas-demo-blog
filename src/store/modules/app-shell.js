@@ -185,23 +185,23 @@ export default {
                             {
                                 text: 'Web前端',
                                 icon: 'sentiment_satisfied',
-                                route: '/'
+                                route: '/?type=1'
                             },
                             {
                                 text: 'Node',
                                 image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
                                 alt: 'mood-bad',
-                                route: '/'
+                                route: '/?type=2'
                             },
                             {
                                 text: '杂谈',
                                 svg: 'svg-sentiment-very-satisfied',
-                                route: '/'
+                                route: '/?type=3'
                             },
                             {
                                 text: '数据库',
                                 svg: 'svg-sentiment-very-satisfied',
-                                route: '/'
+                                route: '/?type=4'
                             }
                         ]
                     }
