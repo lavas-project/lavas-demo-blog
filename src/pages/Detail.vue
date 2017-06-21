@@ -61,7 +61,7 @@ export default {
             ]
         });
 
-        await this.getBlogDetail(id);
+        await this.getBlogDetail({id});
     }
 };
 </script>

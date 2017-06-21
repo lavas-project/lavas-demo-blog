@@ -22,7 +22,7 @@
             :class="classList"
             :style="inlineStyle">
             <!-- 头部 -->
-            <div v-if="title" class="app-sidebar-title" @click.stop="close">
+            <div v-if="title" class="app-sidebar-title" @click.stop="closeAndGo('/')">
                 <span class="app-sidebar-title-left-icon">
                     <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft" />
                     <icon v-else-if="title.svgLeft" :name="title.svgLeft"></icon>
