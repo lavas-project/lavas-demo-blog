@@ -38,6 +38,18 @@
                 </slot>
             </div>
 
+            <!-- 用户信息 -->
+            <div v-if="user" class="app-sidebar-user">
+                 <div class="user-avatar">
+                    <v-icon light class="user-avatar-icon">face</v-icon>
+                 </div>
+                 <div class="user-info">
+                     <div class="user-name"><v-icon>person</v-icon>{{user.name}}</div>
+                     <div class="user-location"><v-icon>room</v-icon>{{user.location}}</div>
+                     <div class="user-email"><v-icon>email</v-icon>{{user.email}}</div>
+                 </div>
+            </div>
+
             <!-- 导航列表分区块 -->
             <div v-if="blocks" class="app-sidebar-blocks">
                 <ul>
@@ -94,6 +106,7 @@ export default {
             'show',
             'slideFrom',
             'title',
+            'user',
             'blocks',
             'width',
             'showWidthThreshold'
@@ -279,9 +292,29 @@ a
         background: $theme.primary
         text-align left
 
+    .app-sidebar-user
+        padding 0 10px
+        font-size 16px
+        .user-avatar
+            margin 30px auto 0 auto
+            height 100px
+            width 100px
+            i
+                font-size 100px
+                color #666
+        .user-info
+            padding 20px 0
+            text-align center
+            border-bottom 1px solid #e0e0e0
+            >div
+                margin 5px 0
+                i
+                    font-size 18px
+                    margin-right 5px
+
     .app-sidebar-blocks
         text-align left
-            
+
         .app-sidebar-block
             padding 10px 0
             border-bottom 1px solid #e0e0e0
@@ -290,7 +323,7 @@ a
             .sub-list-title
                 height $app-sidebar-nav-height
                 line-height $app-sidebar-nav-height
-                text-indent ($app-sidebar-left-icon-size + 28)px
+                text-indent ($app-sidebar-left-icon-size)px
                 font-weight bold
                 color #888
 

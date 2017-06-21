@@ -171,55 +171,37 @@ export default {
                 width: 0.75,
                 // 滑动距离展示阈值
                 showWidthThreshold: 0.25,
+                user: {
+                    name: '李汤姆',
+                    location: 'Beijing',
+                    email: 'tom@baidu.com'
+                },
                 // 分块组
                 blocks: [
                     {
                         // 子列表1
-                        sublistTitle: 'Sublist1',
+                        sublistTitle: '文章分类',
                         list: [
                             {
-                                text: 'Detail Page One',
+                                text: 'Web前端',
                                 icon: 'sentiment_satisfied',
-                                route: '/detail'
+                                route: '/'
                             },
                             {
-                                text: 'Detail Page Two',
+                                text: 'Node',
                                 image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
                                 alt: 'mood-bad',
-                                route: '/detail'
+                                route: '/'
                             },
                             {
-                                text: 'Detail Page Three',
+                                text: '杂谈',
                                 svg: 'svg-sentiment-very-satisfied',
-                                route: '/detail'
-                            }
-                        ]
-                    },
-                    {
-                        // 子列表2
-                        sublistTitle: 'Sublist2',
-                        list: [
-                            {
-                                text: 'Detail Page One',
-                                svg: '',
-                                icon: 'sentiment_satisfied',
-                                image: '',
-                                route: '/detail'
+                                route: '/'
                             },
                             {
-                                text: 'Detail Page Two',
-                                svg: '',
-                                icon: '',
-                                image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
-                                alt: 'mood-bad',
-                                route: '/detail'
-                            },
-                            {
-                                text: 'Detail Page Three',
+                                text: '数据库',
                                 svg: 'svg-sentiment-very-satisfied',
-                                icon: '',
-                                image: '',
-                                route: '/detail'
+                                route: '/'
                             }
                         ]
                     }
