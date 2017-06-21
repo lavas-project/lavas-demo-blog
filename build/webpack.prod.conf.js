@@ -20,6 +20,7 @@ var SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 var MultiPathWebpackPlugin = require('multi-path-webpack-plugin');
 var APIWebpackPlugin = require('./plugins/api-webpack-plugin');
+// var PublicPathWebpackPlugin = require('./plugins/publicpath-webpack-plugin');
 
 var env = process.env.NODE_ENV === 'testing'
     ? require('../config/test.env')
@@ -80,7 +81,8 @@ var webpackConfig = merge(baseWebpackConfig, {
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
-                removeAttributeQuotes: true
+                removeAttributeQuotes: true,
+                minifyJS: true
                 // more options:
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
@@ -128,7 +130,11 @@ var webpackConfig = merge(baseWebpackConfig, {
         new MultiPathWebpackPlugin({
             prefix: config.build.assetsPublicPath
         }),
-        new APIWebpackPlugin()
+        new APIWebpackPlugin(),
+        // new PublicPathWebpackPlugin({
+        //     publicPath: config.build.assetsPublicPath,
+        //     static: config.build.assetsSubDirectory
+        // })
     ]
 });
 
