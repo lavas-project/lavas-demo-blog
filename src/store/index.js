@@ -6,13 +6,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import appShell from './modules/app-shell';
-import blogList from './modules/blogList';
+import blog from './modules/blog';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
         appShell,
-        blogList
+        blog
     }
 });
