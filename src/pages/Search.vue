@@ -50,10 +50,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            searchBlogList,
-            loadingStatus
+            searchBlogList
         ])
-    }
+    },
     methods: {
         ...mapActions('appShell/appHeader', [
             'setAppHeader'
