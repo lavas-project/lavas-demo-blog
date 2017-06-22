@@ -47,7 +47,7 @@ export default {
 
         this.setAppHeader({
             show: true,
-            title: '文章详情',
+            title: '',
             showMenu: false,
             showBack: true,
             showLogo: false,
