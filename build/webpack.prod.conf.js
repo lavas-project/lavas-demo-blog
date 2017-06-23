@@ -126,10 +126,10 @@ var webpackConfig = merge(baseWebpackConfig, {
 
         // service worker caching
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
-        new SwRegisterWebpackPlugin({}),
-        new MultiPathWebpackPlugin({
-            prefix: config.build.assetsPublicPath
+        new SwRegisterWebpackPlugin({
+            filePath: path.resolve(__dirname, '../src/service-worker.js')
         }),
+        new MultiPathWebpackPlugin({}),
         new APIWebpackPlugin()
         // ,
         // new PublicPathWebpackPlugin({
