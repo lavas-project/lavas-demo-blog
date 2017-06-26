@@ -61,6 +61,8 @@ export default {
             ]
         });
 
+        document.body.scrollTop = 0;
+
         await this.getBlogDetail({id});
     }
 };

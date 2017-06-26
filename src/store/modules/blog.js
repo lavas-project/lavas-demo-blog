@@ -11,7 +11,8 @@ export default {
         blogList: [],
         loadingStatus: false,
         blogDetail: {},
-        blogSearchList: []
+        blogSearchList: [],
+        homeScrollTop: 0
     },
     getters: {
         blogList(state) {
@@ -25,6 +26,9 @@ export default {
         },
         blogSearchList(state) {
             return state.blogSearchList;
+        },
+        homeScrollTop(state) {
+            return state.homeScrollTop;
         }
     },
     actions: {
@@ -72,6 +76,9 @@ export default {
                 }
             }
             catch (e) {}
+        },
+        saveHomeScrollTop({commit}, scrollTop) {
+            commit(types.SAVE_HOME_SCROLLTOP, scrollTop);
         }
     },
     mutations: {
@@ -125,6 +132,9 @@ export default {
             else {
                 // state.loadingStatus = 'complete';
             }
+        },
+        [types.SAVE_HOME_SCROLLTOP](state, scrollTop) {
+            state.homeScrollTop = scrollTop;
         }
     }
 };

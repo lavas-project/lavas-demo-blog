@@ -30,8 +30,8 @@ export default {
     computed: {
         ...mapGetters([
             'blogList',
-            'loadingStatus'
-
+            'loadingStatus',
+            'homeScrollTop'
         ])
     },
     methods: {
@@ -39,7 +39,8 @@ export default {
             'setAppHeader'
         ]),
         ...mapActions([
-            'getBlogList'
+            'getBlogList',
+            'saveHomeScrollTop'
         ]),
         async getMoreBlogs() {
             let type = this.$route.query.type || '';
@@ -81,6 +82,16 @@ export default {
         });
 
         this.getMoreBlogs();
+    },
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            // 通过 `vm` 访问组件实例
+            document.body.scrollTop = vm.homeScrollTop || 0;
+        });
+    },
+    beforeRouteLeave (to, from, next) {
+        this.saveHomeScrollTop(document.body.scrollTop);
+        next();
     }
 };
 </script>
