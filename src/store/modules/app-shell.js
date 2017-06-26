@@ -38,7 +38,7 @@ const actions = {
      * @param {Function} commit commit
      */
     enablePageTransition({commit}) {
-        commit(tpes.ENABLE_PAGE_TRANSITION, true);
+        commit(types.ENABLE_PAGE_TRANSITION, true);
     },
 
     /**
@@ -50,28 +50,27 @@ const actions = {
         commit(types.DISABLE_PAGE_TRANSITION, false);
     },
 
-    /**
-     * 设置页面是否处于切换中
-     */
     setPageSwitching({commit}, isPageSwitching) {
         commit(types.SET_PAGE_SWITCHING, isPageSwitching);
     }
 };
 
 const mutations = {
-    [types.SET_PAGE_SWITCHING] (state, isPageSwitching) {
+    [types.SET_PAGE_SWITCHING](state, isPageSwitching) {
         state.isPageSwitching = isPageSwitching;
     },
-    [types.SET_PAGE_TRANSITION_NAME] (state, {pageTransitionName}) {
+    [types.SET_PAGE_TRANSITION_NAME](state, {pageTransitionName}) {
         state.pageTransitionName = pageTransitionName;
     }
 };
 
 export default {
     namespaced: true,
+    /* eslint-disable */
     state,
     actions,
     mutations,
+    /* eslint-enable */
     modules: {
         /**
          * 顶部导航栏的数据
@@ -131,15 +130,12 @@ export default {
                 actions: []
             },
             actions: {
-                /**
-                 * 设置顶部导航条
-                 */
                 setAppHeader({commit}, appHeader) {
                     commit(types.SET_APP_HEADER, appHeader);
                 }
             },
             mutations: {
-                [types.SET_APP_HEADER] (state, appHeader) {
+                [types.SET_APP_HEADER](state, appHeader) {
                     state.appHeader = Object.assign(state, appHeader);
                 }
             }
@@ -165,7 +161,7 @@ export default {
                     imageRight: '',
                     altRight: '',
                     svgRight: '',
-                    iconRight: '',
+                    iconRight: ''
                 },
                 // 最大宽度，可以是百分比，也可以以px为单位
                 width: 0.75,
@@ -208,22 +204,15 @@ export default {
                 ]
             },
             actions: {
-                /**
-                 * 展示侧边栏
-                 */
                 showSidebar({commit}) {
                     commit(types.SET_SIDEBAR_VISIBILITY, true);
                 },
-
-                /**
-                 * 隐藏侧边栏
-                 */
                 hideSidebar({commit}) {
                     commit(types.SET_SIDEBAR_VISIBILITY, false);
                 }
             },
             mutations: {
-                [types.SET_SIDEBAR_VISIBILITY] (state, sidebarVisibility) {
+                [types.SET_SIDEBAR_VISIBILITY](state, sidebarVisibility) {
                     state.show = sidebarVisibility;
                 }
             }
@@ -278,29 +267,20 @@ export default {
                 ]
             },
             actions: {
-                /**
-                 * 隐藏底部导航
-                 */
                 hideBottomNav({commit}) {
                     commit(types.SET_APP_BOTTOM_NAV, {show: false});
                 },
 
-                /**
-                 * 显示底部导航
-                 */
                 showBottomNav({commit}) {
                     commit(types.SET_APP_BOTTOM_NAV, {show: true});
                 },
 
-                /**
-                 * 激活底部导航
-                 */
                 activateBottomNav({commit}, name) {
                     commit(types.ACTIVATE_APP_BOTTOM_NAV, name);
                 }
             },
             mutations: {
-                [types.ACTIVATE_APP_BOTTOM_NAV] (state, name) {
+                [types.ACTIVATE_APP_BOTTOM_NAV](state, name) {
                     state.navs = state.navs.map(nav => {
                         if (nav.name === name) {
                             nav.active = true;
@@ -311,7 +291,7 @@ export default {
                         return nav;
                     });
                 },
-                [types.SET_APP_BOTTOM_NAV] (state, appBottomNavigator) {
+                [types.SET_APP_BOTTOM_NAV](state, appBottomNavigator) {
                     state = Object.assign(state, appBottomNavigator);
                 }
             }

@@ -18,7 +18,7 @@ var opn = require('opn');
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
-var proxyMiddleware = require('http-proxy-middleware');
+// var proxyMiddleware = require('http-proxy-middleware');
 var webpackConfig = require('./webpack.dev.conf');
 
 // default port where dev server listens for incoming traffic
@@ -29,7 +29,7 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser;
 
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable;
+// var proxyTable = config.dev.proxyTable;
 
 var app = express();
 var compiler = webpack(webpackConfig);
@@ -101,10 +101,10 @@ function mockup(reqPath, reqParams) {
         }
     }
     return false;
-};
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.all('*', (req, res) => {
+app.all('*', function (req, res) {
     res.json(mockup(req.url, req.method === 'GET' ? req.query : req.body));
 });
 

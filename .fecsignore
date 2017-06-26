@@ -1,8 +1,4 @@
 node_modules
-logs
-public
-.tmp
-test
-dist/
-npm-debug.log
-config/
+dist
+config/sw.tmpl.js
+index.html
