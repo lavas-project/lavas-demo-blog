@@ -6,7 +6,7 @@
 /* eslint-disable no-console */
 
 require('./check-versions')();
-var bodyParser = require('body-parser');
+
 var fs = require('fs');
 var config = require('../config');
 
@@ -54,15 +54,15 @@ compiler.plugin('compilation', function (compilation) {
 });
 
 // proxy api requests
-// Object.keys(proxyTable).forEach(function (context) {
-//     var options = proxyTable[context];
-//     if (typeof options === 'string') {
-//         options = {
-//             target: options
-//         };
-//     }
-//     app.use(proxyMiddleware(options.filter || context, options));
-// });
+Object.keys(proxyTable).forEach(function (context) {
+    var options = proxyTable[context];
+    if (typeof options === 'string') {
+        options = {
+            target: options
+        };
+    }
+    app.use(proxyMiddleware(options.filter || context, options));
+});
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')());
@@ -78,35 +78,8 @@ app.use(hotMiddleware);
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
 
-// 测试环境下直接访问线下的测试数据
-function mockup(reqPath, reqParams) {
-    if (reqPath.indexOf('?') !== -1) {
-        reqPath = reqPath.substring(0, reqPath.indexOf('?'));
-    }
-    var filePath = path.join(__dirname, '../mock/', reqPath);
-    if (fs.existsSync(filePath)) {
-        console.log('mockup数据：' + reqPath);
-
-        if (fs.existsSync(filePath)) {
-            let response = fs.readFileSync(filePath, 'utf-8');
-
-            try {
-                response = JSON.parse(response);
-                return response;
-            }
-            catch (e) {
-                console.log('---- Error in parsing JSON ----');
-                console.log(e);
-            }
-        }
-    }
-    return false;
-};
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.all('*', (req, res) => {
-    res.json(mockup(req.url, req.method === 'GET' ? req.query : req.body));
-});
+// 测试数据映射
+app.use('/api', express.static('./mock/api'));
 
 var uri = 'http://localhost:' + port;
 

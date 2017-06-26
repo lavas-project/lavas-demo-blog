@@ -6,9 +6,14 @@
 var path = require('path');
 var fs = require('fs-extra');
 
+/**
+ * APIPlugin constructor
+ *
+ * @class
+ */
 function APIPlugin() {
     this.path = path.resolve(__dirname, '../../mock');
-};
+}
 
 APIPlugin.prototype.apply = function (compiler) {
     if (fs.existsSync(this.path)) {

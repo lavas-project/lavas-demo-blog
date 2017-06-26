@@ -14,10 +14,18 @@ export default {
         blogSearchList: []
     },
     getters: {
-        blogList: state => state.blogList,
-        loadingStatus: state => state.loadingStatus,
-        blogDetail: state => state.blogDetail,
-        blogSearchList: state => state.blogSearchList
+        blogList(state) {
+            return state.blogList;
+        },
+        loadingStatus(state) {
+            return state.loadingStatus;
+        },
+        blogDetail(state) {
+            return state.blogDetail;
+        },
+        blogSearchList(state) {
+            return state.blogSearchList;
+        }
     },
     actions: {
         async getBlogList({commit}, params) {
@@ -117,6 +125,6 @@ export default {
             else {
                 // state.loadingStatus = 'complete';
             }
-        },
+        }
     }
-}
+};
