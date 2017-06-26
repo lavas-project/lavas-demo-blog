@@ -10,7 +10,7 @@
         <div class="content">
             <div v-for="content in contents" class="news-item">
                 <p v-if="content.type === 'text'">{{ content.data }}</p>
-                <img v-if="content.type === 'image'" :src="content.data.original.url"/>
+                <img v-if="content.type === 'image'" :src="content.data.big.url"/>
             </div>
         </div>
     </div>
@@ -86,7 +86,8 @@ export default {
 
     .content
         line-height 27px
-        font-size 16px
+        font-size 14px
+        word-wrap break-word
         p
             margin-top 10px
             text-indent 32px
