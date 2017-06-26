@@ -1,5 +1,10 @@
+/**
+ * @file theme-loader
+ * @author mj(zoumiaojiang@gmail.com)
+ */
+
 const loaderUtils = require('loader-utils');
-const STYLE_TAG_REG= /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
+const STYLE_TAG_REG = /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
 const defaultVuetifyVariables = {
     themeColor: {
         primary: '$blue.darken-2',
@@ -23,7 +28,7 @@ const defaultVuetifyVariables = {
     }
 };
 // extract vuetify theme variables
-const {theme} = require('../../config');
+const theme = require('../../config').theme;
 const themeColor = Object.assign({},
     defaultVuetifyVariables.themeColor, theme.theme.themeColor);
 let themeColorTemplate = `
@@ -56,7 +61,7 @@ let materialDesignTemplate = `
 `;
 
 // import global variables
-const importVariablesTemplate = `@import '~@/assets/styles/variables';`;
+const importVariablesTemplate = '@import \'~@/assets/styles/variables\';';
 // add to global variables
 const injectedTemplate = `
     ${importVariablesTemplate}
@@ -72,4 +77,4 @@ module.exports = function (source) {
         return source.replace(STYLE_TAG_REG, `$1${injectedTemplate}$2$3`);
     }
     return `${injectedTemplate}${source}`;
-}
+};

@@ -1,3 +1,8 @@
+/**
+ * @file theme config
+ * @author mj(zoumiaojiang@gmail.com)
+ */
+
 // 定义主题列表
 const themeList = {
     // 定义主题名称

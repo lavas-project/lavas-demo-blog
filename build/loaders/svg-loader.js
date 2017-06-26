@@ -1,7 +1,12 @@
+/**
+ * @file svg-loader
+ * @author mj(zoumiaojiang@gmail.com)
+ */
+
 const fs = require('fs');
 const path = require('path');
-const {icon} = require('../../config');
-const {svgDir, icons, prefix} = icon;
+const {icon: {svgDir, icons, prefix}} = require('../../config');
+// const {svgDir, icons, prefix} = icon;
 
 module.exports = source => {
     if (icons) {
@@ -30,4 +35,4 @@ module.exports = source => {
             });`;
     });
     return source;
-}
+};
