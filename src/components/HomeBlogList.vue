@@ -32,8 +32,7 @@ export default {
 
         // 查看详情
         async openDetail (blogId) {
-            // this.getBlogDetail({bid});
-            this.$router.push('/detail/?id=' + blogId);
+            this.$router.push('/detail/' + blogId);
         }
     }
 };

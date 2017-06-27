@@ -30,9 +30,12 @@ export function createRouter() {
                 // }
             },
             {
-                path: '/detail',
+                path: '/detail/:id',
                 name: 'detail',
-                component: Detail
+                component: Detail,
+                meta: {
+                    notKeepAlive: true
+                }
             },
             {
                 path: '/user',

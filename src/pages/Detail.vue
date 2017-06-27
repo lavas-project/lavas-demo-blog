@@ -37,14 +37,14 @@ export default {
     methods: {
         ...mapActions('appShell/appHeader', [
             'setAppHeader'
-        ]),
-        ...mapActions([
-            'getBlogDetail'
         ])
     },
-    async activated() {
-        var id = this.$route.query.id;
+    async asyncData({store, route}) {
+        let id = route.params.id;
 
+        await store.dispatch('getBlogDetail', {id});
+    },
+    created() {
         this.setAppHeader({
             show: true,
             title: '',
@@ -62,8 +62,6 @@ export default {
         });
 
         document.body.scrollTop = 0;
-
-        await this.getBlogDetail({id});
     }
 };
 </script>

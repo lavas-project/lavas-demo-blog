@@ -25,10 +25,14 @@ Vue.mixin({
     beforeRouteUpdate(to, from, next) {
         const asyncData = this.$options.asyncData;
         if (asyncData) {
-            asyncData({
+            loading.start();
+            asyncData.call(this, {
                 store: this.$store,
                 route: to
-            }).then(next).catch(next);
+            }).then(() => {
+                loading.finish();
+                next();
+            }).catch(next);
         }
         else {
             next();
