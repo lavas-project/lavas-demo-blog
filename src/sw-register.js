@@ -54,7 +54,7 @@ if ('serviceWorker' in navigator) {
 
     navigator.serviceWorker.addEventListener('message', e => {
         // received the update message from sw
-        if (e.data === 'updateMessage') {
+        if (e.data === 'sw.update') {
             handlerUpdateMessage(e);
         }
     });

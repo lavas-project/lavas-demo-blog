@@ -83,7 +83,7 @@ module.exports = {
          *
          * @type {string}
          */
-        templateFilePath: 'build/sw.tmpl',
+        templateFilePath: 'config/sw.tmpl.js',
 
 
         /**
