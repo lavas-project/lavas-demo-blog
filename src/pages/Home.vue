@@ -13,9 +13,8 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
-import EventBus from '@/event-bus';
 import InfiniteLoading from 'vue-infinite-loading';
-import HomeBlogList from '@/components/HomeBlogList.vue'
+import HomeBlogList from '@/components/HomeBlogList.vue';
 
 export default {
     name: 'home',
@@ -55,7 +54,7 @@ export default {
         }
     },
     watch: {
-        '$route.query.type': function (type) {
+        ['$route.query.type'](type) {
             document.body.scrollTop = 0;
 
             this.getBlogList({
@@ -83,13 +82,13 @@ export default {
 
         this.getMoreBlogs();
     },
-    beforeRouteEnter (to, from, next) {
+    beforeRouteEnter(to, from, next) {
         next(vm => {
             // 通过 `vm` 访问组件实例
             document.body.scrollTop = vm.homeScrollTop || 0;
         });
     },
-    beforeRouteLeave (to, from, next) {
+    beforeRouteLeave(to, from, next) {
         this.saveHomeScrollTop(document.body.scrollTop);
         next();
     }

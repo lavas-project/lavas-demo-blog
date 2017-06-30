@@ -10,12 +10,8 @@
 }
 
 .material-icons {
-    font-family: "Material Icons";
-    font-weight: 400;
-    font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
     display: inline-block;
-    line-height: 1;
+    font: normal normal 24px/24px "Material Icons";
     text-transform: none;
     letter-spacing: normal;
     word-wrap: normal;

@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
 import AppMask from './AppMask.vue';
 
 // hammer.js 方向常量
@@ -116,6 +116,7 @@ export default {
                 'app-sidebar-content-right': this.slideFrom !== 'left'
             };
         },
+        /*eslint-disable*/
         inlineStyle() {
             // 拖拽时取消transition
             let transition = this.isDragging ? 'none' : 'transform .5s ease';
@@ -125,17 +126,18 @@ export default {
                 initTranslateX = -initTranslateX;
             }
             // 当前水平方向平移距离
-            let currentTranslateX = (this.isDragging ?
-                this.translateX : (this.show ? 0 : initTranslateX));
+            let currentTranslateX = this.isDragging
+                ? this.translateX
+                : (this.show ? 0 : initTranslateX);
             let styleObj = {
-                width: `${this.widthInPx}px`,
-                transition: transition,
+                'width': `${this.widthInPx}px`,
+                'transition': transition,
                 '-webkit-transition': transition,
-                transform: `translate3d(${currentTranslateX}px, 0, 0)`,
-                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`
-            }
-            // 展示状态绝对定位靠左/右
-            styleObj[this.slideFrom] = 0;
+                'transform': `translate3d(${currentTranslateX}px, 0, 0)`,
+                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`,
+                [this.slideFrom]: 0 // 展示状态绝对定位靠左/右
+            };
+
             return styleObj;
         },
         closeDirection() {
@@ -173,7 +175,7 @@ export default {
             this.translateX = 0;
         },
         handlePanMove(event) {
-            let {deltaX} = event;
+            let deltaX = event.deltaX;
             let translateX = deltaX + (this.slideFrom === 'left' ? -this.widthInPx : this.widthInPx);
             this.isDragging = true;
             if (this.widthInPx < Math.abs(deltaX)) { // 滑动超过了sidebar宽度

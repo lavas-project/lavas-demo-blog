@@ -28,7 +28,6 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
-import types from '@/store/mutation-types';
 
 export default {
     name: 'search',
@@ -72,7 +71,7 @@ export default {
             this.loading = false;
         },
         // 查看详情
-        async openDetail (blogId) {
+        async openDetail(blogId) {
             this.$router.push('/detail/' + blogId);
         }
     },

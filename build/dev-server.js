@@ -7,7 +7,6 @@
 
 require('./check-versions')();
 
-var fs = require('fs');
 var config = require('../config');
 
 if (!process.env.NODE_ENV) {

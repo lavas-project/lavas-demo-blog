@@ -54,7 +54,7 @@ export default {
         AppHeader,
         AppSidebar
     },
-    data () {
+    data() {
         return {};
     },
     computed: {
@@ -69,7 +69,7 @@ export default {
         ]),
         ...mapActions('appShell/appSidebar', [
             'showSidebar',
-            'hideSidebar',
+            'hideSidebar'
         ]),
         handleBeforeEnter() {
             this.setPageSwitching(true);

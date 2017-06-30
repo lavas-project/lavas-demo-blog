@@ -14,13 +14,12 @@
 <script>
 
 import {mapGetters, mapActions} from 'vuex';
-import EventBus from '@/event-bus';
 
 export default {
     name: 'homeBlogList',
     props: ['blogList'],
     data() {
-        return {}
+        return {};
     },
     computed: {
         ...mapGetters([
@@ -31,7 +30,7 @@ export default {
         ]),
 
         // 查看详情
-        async openDetail (blogId) {
+        async openDetail(blogId) {
             this.$router.push('/detail/' + blogId);
         }
     }
