@@ -15,7 +15,7 @@
                     @click.native="handleClick('back')">
                     <v-icon class="app-header-icon">arrow_back</v-icon>
                 </v-btn>
-                <div v-if="showLogo" @click="handleClick('logo')">
+                <div v-if="showLogo && logoIcon" @click="handleClick('logo')">
                     <slot name="logo">
                         <icon :name="logoIcon" class="app-header-icon"></icon>
                     </slot>
